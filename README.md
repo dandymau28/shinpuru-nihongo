@@ -44,9 +44,12 @@ npm run typecheck  # tsc --noEmit
 
 ## Deployment
 
-No server code — every route is static (`generateStaticParams` for the 90 day pages and the
-lesson pages). Deploy to Vercel with zero config, or add `output: "export"` to
-`next.config.ts` and host the `out/` folder anywhere static.
+`next.config.ts` sets `output: "export"`, so `npm run build` emits a fully static `out/`
+folder — no server runtime. Serve it with any static host (nginx, Caddy, GitHub Pages,
+Netlify) or deploy to Vercel.
+
+See [`docs/deploy.md`](docs/deploy.md) for a step-by-step VPS setup (nginx + Certbot +
+a custom subdomain).
 
 ## How it fits together
 
