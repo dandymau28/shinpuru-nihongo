@@ -1,36 +1,99 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Shinpuru Nihongo · シンプル日本語
 
-## Getting Started
+A self-contained JLPT **N5 → N4** study site built from a 90-day daily study planner.
+Each day of the plan has its lesson, drills, reading, listening, or mock test **built into
+the site** — no jumping between a dozen external resources.
 
-First, run the development server:
+- **90-day planner** (Sep 2 → Nov 30) with an N5 refresher → N4 grammar core → exam sprint.
+- **Interactive exercises**: multiple choice, fill-in-the-blank, sentence building, timed
+  conjugation streaks, flashcard decks, reading comprehension, and listening (browser
+  speech synthesis, or embedded video where the source is a YouTube clip).
+- **Automatic day score** — every graded exercise on a day rolls into one live percentage
+  (shown as a sticky counter while you work, and in the planner list). A day flips to
+  "done" once all its exercises are finished. Status, a "reviewed" flag, and free-text
+  notes are also tracked per day.
+- **Conjugation Trainer** (`/practice/conjugation`) — a standalone drill for every N5–N4
+  verb and adjective form: ~20 forms (predicate matrix, て-family, potential, passive,
+  causative, causative-passive, imperative, conditionals, adverbial), a curated word bank,
+  rōmaji auto-conversion for learners without an IME, endless or fixed-set sessions, and
+  persistent weak-spot tracking.
+- **No accounts, no backend.** One learner per browser: everything is stored in
+  `localStorage`, with JSON export / import for backup or moving devices.
+- **Bilingual** (English / Bahasa Indonesia) explanations and UI, plus furigana and romaji
+  toggles.
+
+## Requirements
+
+- **Node.js 20+** (see `.nvmrc`). Next.js 15 does not run on Node 18.17.
+
+## Getting started
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+nvm use            # or: nvm use 20
+npm install
+npm run dev        # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Other scripts:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build      # production build (also full type-check + lint)
+npm run start      # serve the production build
+npm run typecheck  # tsc --noEmit
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Deployment
 
-## Learn More
+No server code — every route is static (`generateStaticParams` for the 90 day pages and the
+lesson pages). Deploy to Vercel with zero config, or add `output: "export"` to
+`next.config.ts` and host the `out/` folder anywhere static.
 
-To learn more about Next.js, take a look at the following resources:
+## How it fits together
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+src/
+  app/                     Routes (App Router)
+    page.tsx               Dashboard
+    planner/               90-day timeline + filters
+    day/[day]/             One day: task, links, embedded lesson/exercises, progress
+    lesson/[slug]/         Standalone lesson view
+    practice/              Practice hub + practice/conjugation (the trainer)
+    settings/  about/
+  data/
+    planner.ts             All 90 days (title, task, type, phase, links, youtube)
+    words.ts               Verb + adjective word bank (N5/N4) for the trainer
+    verbs-n5.ts            N5 verb subset + in-lesson conjugation-drill generator
+  content/
+    lessons/  skills/  decks/  reading/  listening/  tests/
+    registry.ts            Maps a day's `lessonSlug` → its content module
+  components/
+    lesson/                Renderers: LessonView, TestRunner, ReadingRunner,
+                           ListeningRunner, DeckRunner, SkillView, ContentRenderer
+    exercises/             ExerciseSet + question types
+    practice/              ConjugationTrainer + settings / stats panels
+    planner/  dashboard/  layout/  ui/
+  context/
+    SettingsContext.tsx    lang / theme / furigana / romaji / start date
+    ProgressContext.tsx    per-day progress (status / reviewed / notes / results), localStorage
+  lib/
+    types.ts  i18n.ts  strings.ts  labels.ts  dates.ts  dayScore.ts
+    furigana.tsx           `漢字[かんじ]` → <ruby>
+    conjugation.ts         verb + adjective conjugation engine + form catalog
+    conjPractice.ts        trainer session logic + persistent weak-spot stats
+    romaji.ts              rōmaji → hiragana (IME-free input)
+    answers.ts  tts.ts  useCurrentDay.ts
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Content status
 
-## Deploy on Vercel
+Days **1–14** are fully authored (lessons + exercises + decks + reading + listening +
+tests). Days 15+ currently show their original reference links and a "coming soon" panel;
+their native content is added in batches. See [`docs/authoring.md`](docs/authoring.md) for
+how to add a day.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## A note on the content
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Explanations, example sentences, passages, and exercise items are written for this site.
+They cover the same grammar points as the resources the planner references (Tofugu, Bunpro,
+MLC, LTL, Genki notes, and others) but are **not** copied from them. The external links are
+kept so you can compare explanations.

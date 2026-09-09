@@ -1,26 +1,102 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #f7f7f8;
+  --surface: #ffffff;
+  --surface-2: #f1f1f4;
+  --border: #e3e3e8;
+  --fg: #1b1b1f;
+  --muted: #6b6b76;
+  --primary: #4f46e5;
+  --primary-fg: #ffffff;
+  --primary-soft: #ecebfd;
+  --accent: #e11d68;
+  --accent-soft: #fce7f0;
+  --success: #15803d;
+  --success-soft: #dcfce7;
+  --warning: #b45309;
+  --warning-soft: #fef3c7;
+  --danger: #dc2626;
+  --ring: #4f46e5;
+}
+
+.dark {
+  --bg: #0e0e11;
+  --surface: #17171b;
+  --surface-2: #1f1f25;
+  --border: #2c2c34;
+  --fg: #ececef;
+  --muted: #9a9aa6;
+  --primary: #8b83ff;
+  --primary-fg: #14131f;
+  --primary-soft: #26243b;
+  --accent: #f9639e;
+  --accent-soft: #3a2130;
+  --success: #4ade80;
+  --success-soft: #14311f;
+  --warning: #fbbf24;
+  --warning-soft: #362a12;
+  --danger: #f87171;
+  --ring: #8b83ff;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border: var(--border);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-primary: var(--primary);
+  --color-primary-fg: var(--primary-fg);
+  --color-primary-soft: var(--primary-soft);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-danger: var(--danger);
+  --font-sans: var(--font-noto-sans-jp), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, sans-serif;
+  --font-jp: var(--font-noto-sans-jp), "Hiragino Kaku Gothic ProN", "Yu Gothic",
+    Meiryo, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  color-scheme: light;
+}
+html.dark {
+  color-scheme: dark;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Furigana sizing */
+ruby rt {
+  font-size: 0.58em;
+  font-weight: 400;
+  color: var(--muted);
+  user-select: none;
+}
+
+/* Hide furigana when the reading-aid toggle is off */
+.no-furigana ruby rt {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
 }

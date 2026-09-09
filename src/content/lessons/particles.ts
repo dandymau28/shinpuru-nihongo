@@ -1,0 +1,215 @@
+import type { ContentModule } from "@/lib/types";
+
+export const particles: ContentModule = {
+  type: "lesson",
+  slug: "particles",
+  level: "N5",
+  title: { en: "Core Particles", id: "Partikel Inti" },
+  titleJa: "助詞",
+  summary: {
+    en: "The small words that mark who does what to whom. Get は・が・を・に・で・へ・と・も solid and every later grammar point gets easier.",
+    id: "Kata-kata kecil yang menandai siapa melakukan apa kepada siapa. Kuasai は・が・を・に・で・へ・と・も dan semua tata bahasa berikutnya jadi lebih mudah.",
+  },
+  sections: [
+    {
+      kind: "prose",
+      heading: { en: "What particles do", id: "Fungsi partikel" },
+      body: {
+        en: "Japanese word order is flexible because particles, not position, show each word's job. A particle comes directly after the word it marks. The verb still comes last.",
+        id: "Urutan kata bahasa Jepang fleksibel karena partikel — bukan posisi — yang menunjukkan peran tiap kata. Partikel diletakkan tepat setelah kata yang ditandainya. Kata kerja tetap di akhir.",
+      },
+    },
+    {
+      kind: "table",
+      heading: { en: "Quick reference", id: "Referensi cepat" },
+      columns: [
+        { en: "Particle", id: "Partikel" },
+        { en: "Marks", id: "Menandai" },
+        { en: "Example", id: "Contoh" },
+      ],
+      rows: [
+        { cells: ["は", { en: "topic (\"as for…\")", id: "topik (\"mengenai…\")" }, "私[わたし]は"], ja: false },
+        { cells: ["が", { en: "subject / new information", id: "subjek / informasi baru" }, "雨[あめ]が"], ja: false },
+        { cells: ["を", { en: "direct object", id: "objek langsung" }, "ご飯[はん]を"], ja: false },
+        { cells: ["に", { en: "destination, time, target", id: "tujuan, waktu, sasaran" }, "学校[がっこう]に"], ja: false },
+        { cells: ["で", { en: "place of action, means", id: "tempat aksi, alat/cara" }, "電車[でんしゃ]で"], ja: false },
+        { cells: ["へ", { en: "direction (≈ に)", id: "arah (≈ に)" }, "東京[とうきょう]へ"], ja: false },
+        { cells: ["と", { en: "\"and\" (nouns), \"with\"", id: "\"dan\" (nomina), \"dengan\"" }, "友[とも]だちと"], ja: false },
+        { cells: ["も", { en: "\"also / too\"", id: "\"juga\"" }, "私[わたし]も"], ja: false },
+      ],
+    },
+    {
+      kind: "prose",
+      heading: { en: "は vs が — the big one", id: "は vs が — yang utama" },
+      body: {
+        en: "は sets the topic: what the sentence is about. Everything after は is the comment. が points at the subject and often introduces something new or answers \"which one?\".\n\n• Known / contrast → は:  今日[きょう]は 忙[いそが]しいです。\n• New / identifying → が:  だれが 来[き]ましたか。— たなかさんが 来ました。\nWith describing-adjectives of feeling and ability (好[す]き、上手[じょうず]、ある/いる), the thing is marked with が.",
+        id: "は menetapkan topik: tentang apa kalimatnya. Semua setelah は adalah komentar. が menunjuk subjek dan sering memperkenalkan sesuatu yang baru atau menjawab \"yang mana?\".\n\n• Sudah diketahui / kontras → は:  今日[きょう]は 忙[いそが]しいです。\n• Baru / mengidentifikasi → が:  だれが 来[き]ましたか。— たなかさんが 来ました。\nDengan kata sifat perasaan & kemampuan (好[す]き、上手[じょうず]、ある/いる), objeknya ditandai が.",
+      },
+    },
+    {
+      kind: "prose",
+      heading: { en: "に vs で for place", id: "に vs で untuk tempat" },
+      body: {
+        en: "に = where something exists or where you end up (with いる／ある／行く／来る／入る). で = where an action happens.\n\n• 部屋[へや]に います。 — I'm in the room. (existence)\n• 部屋[へや]で 勉強[べんきょう]します。 — I study in the room. (action)",
+        id: "に = tempat sesuatu berada atau tempat kamu berakhir (dengan いる／ある／行く／来る／入る). で = tempat suatu tindakan terjadi.\n\n• 部屋[へや]に います。 — Saya di kamar. (keberadaan)\n• 部屋[へや]で 勉強[べんきょう]します。 — Saya belajar di kamar. (tindakan)",
+      },
+    },
+    {
+      kind: "examples",
+      heading: { en: "Particles in action", id: "Partikel dalam kalimat" },
+      items: [
+        {
+          ja: "私[わたし]は 毎朝[まいあさ] コーヒーを 飲[の]みます。",
+          romaji: "Watashi wa maiasa kōhī o nomimasu.",
+          en: "I drink coffee every morning.",
+          id: "Saya minum kopi setiap pagi.",
+        },
+        {
+          ja: "友[とも]だちと バスで 京都[きょうと]へ 行[い]きました。",
+          romaji: "Tomodachi to basu de Kyōto e ikimashita.",
+          en: "I went to Kyoto by bus with a friend.",
+          id: "Saya pergi ke Kyoto naik bus bersama teman.",
+        },
+        {
+          ja: "テーブルの 上[うえ]に 本[ほん]が あります。",
+          romaji: "Tēburu no ue ni hon ga arimasu.",
+          en: "There is a book on the table.",
+          id: "Ada buku di atas meja.",
+          note: { en: "New thing appearing → が", id: "Hal baru yang muncul → が" },
+        },
+        {
+          ja: "日曜日[にちようび]は うちで 映画[えいが]を 見[み]ます。",
+          romaji: "Nichiyōbi wa uchi de eiga o mimasu.",
+          en: "On Sundays I watch movies at home.",
+          id: "Pada hari Minggu saya menonton film di rumah.",
+        },
+      ],
+    },
+    {
+      kind: "note",
+      tone: "warning",
+      body: {
+        en: "Common slips: を with a place + intransitive motion is fine (公園[こうえん]を 散歩[さんぽ]する = walk through the park), but destinations take に／へ. Don't put を before 好き — it's 〜が 好き.",
+        id: "Kesalahan umum: を dengan tempat + gerak intransitif itu boleh (公園[こうえん]を 散歩[さんぽ]する = berjalan melewati taman), tetapi tujuan pakai に／へ. Jangan pakai を sebelum 好き — yang benar 〜が 好き.",
+      },
+    },
+  ],
+  exercises: [
+    {
+      id: "particles:cloze",
+      title: { en: "Fill the particle", id: "Isi partikelnya" },
+      instructions: {
+        en: "Type the single particle that fits. Say the whole sentence aloud first.",
+        id: "Ketik satu partikel yang tepat. Ucapkan seluruh kalimat dengan lantang dulu.",
+      },
+      speak: true,
+      questions: [
+        {
+          kind: "cloze",
+          ja: "私[わたし]___ 学生[がくせい]です。",
+          accept: ["は"],
+          en: "I am a student.",
+          id: "Saya seorang pelajar.",
+          explain: { en: "Topic of the sentence → は.", id: "Topik kalimat → は." },
+        },
+        {
+          kind: "cloze",
+          ja: "毎日[まいにち] 日本語[にほんご]___ 勉強[べんきょう]します。",
+          accept: ["を"],
+          en: "I study Japanese every day.",
+          id: "Saya belajar bahasa Jepang setiap hari.",
+          explain: { en: "Direct object of 勉強する → を.", id: "Objek langsung 勉強する → を." },
+        },
+        {
+          kind: "cloze",
+          ja: "7時[しちじ]___ 起[お]きます。",
+          accept: ["に"],
+          en: "I get up at 7.",
+          id: "Saya bangun jam 7.",
+          explain: { en: "Specific clock time → に.", id: "Waktu jam yang spesifik → に." },
+        },
+        {
+          kind: "cloze",
+          ja: "図書館[としょかん]___ 本[ほん]を 読[よ]みます。",
+          accept: ["で"],
+          en: "I read books at the library.",
+          id: "Saya membaca buku di perpustakaan.",
+          explain: { en: "Place where the action happens → で.", id: "Tempat tindakan terjadi → で." },
+        },
+        {
+          kind: "cloze",
+          ja: "机[つくえ]の 下[した]___ 猫[ねこ]が います。",
+          accept: ["に"],
+          en: "There is a cat under the desk.",
+          id: "Ada kucing di bawah meja.",
+          explain: { en: "Existence with いる → に.", id: "Keberadaan dengan いる → に." },
+        },
+        {
+          kind: "cloze",
+          ja: "だれ___ 来[き]ましたか。",
+          accept: ["が"],
+          en: "Who came?",
+          id: "Siapa yang datang?",
+          explain: { en: "Question-word subject → が.", id: "Subjek kata tanya → が." },
+        },
+        {
+          kind: "cloze",
+          ja: "母[はは]___ 買[か]い物[もの]に 行[い]きました。",
+          accept: ["と"],
+          en: "I went shopping with my mother.",
+          id: "Saya pergi berbelanja bersama ibu.",
+          explain: { en: "\"with a person\" → と.", id: "\"bersama seseorang\" → と." },
+        },
+        {
+          kind: "cloze",
+          ja: "コーヒー___ お茶[ちゃ]も 好[す]きです。",
+          accept: ["も"],
+          en: "I like coffee, and tea too.",
+          id: "Saya suka kopi, dan teh juga.",
+          explain: { en: "\"also\" replaces を here → も.", id: "\"juga\" menggantikan を di sini → も." },
+        },
+        {
+          kind: "cloze",
+          ja: "きのう 東京[とうきょう]___ 行[い]きました。",
+          accept: ["に", "へ"],
+          en: "I went to Tokyo yesterday.",
+          id: "Kemarin saya pergi ke Tokyo.",
+          explain: { en: "Destination → に or へ.", id: "Tujuan → に atau へ." },
+        },
+        {
+          kind: "cloze",
+          ja: "スプーン___ スープを 飲[の]みます。",
+          accept: ["で"],
+          en: "I eat soup with a spoon.",
+          id: "Saya makan sup dengan sendok.",
+          explain: { en: "Means / tool → で.", id: "Alat / cara → で." },
+        },
+      ],
+    },
+    {
+      id: "particles:build",
+      title: { en: "Build the sentence", id: "Susun kalimatnya" },
+      instructions: { en: "Put the tiles in natural order.", id: "Susun ubin dalam urutan yang wajar." },
+      questions: [
+        {
+          kind: "build",
+          tiles: ["私[わたし]は", "毎日[まいにち]", "電車[でんしゃ]で", "会社[かいしゃ]に", "行[い]きます"],
+          en: "I go to the office by train every day.",
+          id: "Saya pergi ke kantor naik kereta setiap hari.",
+        },
+        {
+          kind: "build",
+          tiles: ["きのう", "友[とも]だちと", "レストランで", "晩[ばん]ご飯[はん]を", "食[た]べました"],
+          en: "Yesterday I ate dinner at a restaurant with a friend.",
+          id: "Kemarin saya makan malam di restoran bersama teman.",
+        },
+        {
+          kind: "build",
+          tiles: ["部屋[へや]に", "大[おお]きい", "窓[まど]が", "あります"],
+          en: "There is a big window in the room.",
+          id: "Ada jendela besar di kamar.",
+        },
+      ],
+    },
+  ],
+};
