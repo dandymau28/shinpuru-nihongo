@@ -20,6 +20,12 @@ const TOOLS = [
     name: STR.practice_particles_name,
     desc: STR.practice_particles_desc,
   },
+  {
+    href: "/practice/kanji",
+    emoji: "🈳",
+    name: STR.practice_kanji_name,
+    desc: STR.practice_kanji_desc,
+  },
 ];
 
 export default function PracticePage() {

@@ -1,15 +1,22 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { useSettings } from "@/context/SettingsContext";
 import { STR } from "@/lib/strings";
 import { cn } from "@/lib/cn";
 import type { usePracticeStats } from "@/lib/practiceStats";
 import { Card } from "@/components/ui/Card";
 
-export function ParticleStatsPanel({
+/**
+ * Shared weak-spot panel for the particle and kanji trainers.
+ * `renderKey` customises how each item key is displayed (defaults to the raw key).
+ */
+export function PracticeStatsPanel({
   stats,
+  renderKey,
 }: {
   stats: ReturnType<typeof usePracticeStats>;
+  renderKey?: (key: string) => ReactNode;
 }) {
   const { t } = useSettings();
   const { stats: s, ranked, reset, hydrated } = stats;
@@ -45,7 +52,9 @@ export function ParticleStatsPanel({
       <ul className="space-y-1">
         {ranked.slice(0, 8).map((r) => (
           <li key={r.key} className="flex items-center gap-2 text-xs">
-            <span className="w-10 shrink-0 font-jp text-sm font-bold">{r.key}</span>
+            <span className="w-16 shrink-0 truncate font-jp text-sm font-bold">
+              {renderKey ? renderKey(r.key) : r.key}
+            </span>
             <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-surface-2">
               <div
                 className={cn(

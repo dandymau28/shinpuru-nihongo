@@ -30,6 +30,11 @@ export const STR = {
     en: "Fill-in-the-blank drills for は が を に で へ and more — tap the right particle, with は-vs-が and に-vs-で focus sets.",
     id: "Latihan isi-titik untuk は が を に で へ dan lainnya — ketuk partikel yang tepat, dengan set fokus は-vs-が dan に-vs-で.",
   },
+  practice_kanji_name: { en: "Kanji Trainer", id: "Latihan Kanji" },
+  practice_kanji_desc: {
+    en: "~150 N5–N4 kanji words — drill reading, meaning, or kana → kanji, four options per question.",
+    id: "~150 kata kanji N5–N4 — latih bacaan, arti, atau kana → kanji, empat pilihan per soal.",
+  },
 
   // Particle trainer
   pt_title: { en: "Particle Trainer", id: "Latihan Partikel" },
@@ -38,6 +43,15 @@ export const STR = {
   pt_no_drills: {
     en: "No sentences match — pick more particles or a wider level.",
     id: "Tidak ada kalimat yang cocok — pilih lebih banyak partikel atau tingkat yang lebih luas.",
+  },
+
+  // Kanji trainer
+  kj_title: { en: "Kanji Trainer", id: "Latihan Kanji" },
+  kj_pick_what: { en: "What do you want to drill?", id: "Mau latihan yang mana?" },
+  kj_level: { en: "Level", id: "Tingkat" },
+  kj_no_words: {
+    en: "Pick at least one level.",
+    id: "Pilih minimal satu tingkat.",
   },
 
   // Conjugation trainer

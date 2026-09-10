@@ -1,34 +1,35 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSettings } from "@/context/SettingsContext";
 import { STR } from "@/lib/strings";
 import { cn } from "@/lib/cn";
-import { furigana } from "@/lib/furigana";
 import {
   DEFAULT_SETTINGS,
   buildQueue,
-  eligibleDrills,
+  eligibleEntries,
   loadSettings,
   saveSettings,
   sessionLength,
-  type ParticleDrill,
-  type ParticleSettings,
-} from "@/lib/particlePractice";
+  MODE_LABEL,
+  type KanjiQuestion,
+  type KanjiSettings,
+} from "@/lib/kanjiPractice";
 import { STREAK_MILESTONES, usePracticeStats } from "@/lib/practiceStats";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
-import { ParticleTrainerSetup } from "./ParticleTrainerSetup";
+import { KanjiTrainerSetup } from "./KanjiTrainerSetup";
 import { PracticeStatsPanel } from "./PracticeStatsPanel";
 import { StreakCelebration } from "./StreakCelebration";
 
 type Phase = "setup" | "playing" | "summary";
 
-export function ParticleTrainer() {
+export function KanjiTrainer() {
   const { t, lang } = useSettings();
-  const stats = usePracticeStats("sn.particles.stats");
+  const stats = usePracticeStats("sn.kanji.stats");
+  const gloss = (b: { en: string; id: string }) => (lang === "id" ? b.id : b.en);
 
-  const [settings, setSettings] = useState<ParticleSettings>(DEFAULT_SETTINGS);
+  const [settings, setSettings] = useState<KanjiSettings>(DEFAULT_SETTINGS);
   const [phase, setPhase] = useState<Phase>("setup");
 
   useEffect(() => {
@@ -38,28 +39,31 @@ export function ParticleTrainer() {
     saveSettings(settings);
   }, [settings]);
 
-  const [queue, setQueue] = useState<ParticleDrill[]>([]);
+  const [queue, setQueue] = useState<KanjiQuestion[]>([]);
   const [pos, setPos] = useState(0);
-  const [picked, setPicked] = useState<string | null>(null);
+  const [picked, setPicked] = useState<number | null>(null);
   const [result, setResult] = useState<null | "right" | "wrong">(null);
   const [streak, setStreak] = useState(0);
   const [best, setBest] = useState(0);
   const [seen, setSeen] = useState(0);
   const [correct, setCorrect] = useState(0);
-  const [wrong, setWrong] = useState<ParticleDrill[]>([]);
+  const [wrong, setWrong] = useState<KanjiQuestion[]>([]);
   const [celebration, setCelebration] = useState<{ milestone: number; id: number } | null>(null);
 
-  const total = sessionLength(settings.mode);
+  const total = sessionLength(settings.session);
   const item = queue[pos % Math.max(queue.length, 1)];
-  const chips = useMemo(
-    () => settings.particles.slice().sort((a, b) => a.length - b.length),
-    [settings.particles],
-  );
 
   const start = useCallback(
-    (opts?: { weak?: boolean; only?: ParticleDrill[] }) => {
+    (opts?: { weak?: boolean; only?: KanjiQuestion[] }) => {
       const q =
-        opts?.only ?? buildQueue(settings, opts?.weak ? stats.weakKeys : undefined);
+        opts?.only ??
+        buildQueue(
+          settings,
+          opts?.weak ? stats.weakKeys : undefined,
+          opts?.weak
+            ? eligibleEntries(settings).filter((e) => stats.weakKeys.has(e.kanji))
+            : undefined,
+        );
       if (q.length === 0) return;
       setQueue(q);
       setPos(0);
@@ -76,10 +80,10 @@ export function ParticleTrainer() {
     [settings, stats.weakKeys],
   );
 
-  function choose(p: string) {
+  function choose(i: number) {
     if (!item || result) return;
-    const ok = p === item.answer || (item.accept?.includes(p) ?? false);
-    setPicked(p);
+    const ok = i === item.answer;
+    setPicked(i);
     setResult(ok ? "right" : "wrong");
     setSeen((s) => s + 1);
     if (ok) {
@@ -99,7 +103,7 @@ export function ParticleTrainer() {
       setStreak(0);
       setWrong((w) => (w.some((x) => x.key === item.key) ? w : [...w, item]));
     }
-    stats.record(item.answer, ok, ok ? streak + 1 : streak);
+    stats.record(item.key, ok, ok ? streak + 1 : streak);
   }
 
   function next() {
@@ -112,7 +116,6 @@ export function ParticleTrainer() {
     setResult(null);
   }
 
-  // Enter → next; number keys 1-9 → pick the nth chip.
   useEffect(() => {
     if (phase !== "playing") return;
     const handler = (e: KeyboardEvent) => {
@@ -123,12 +126,9 @@ export function ParticleTrainer() {
         }
         return;
       }
-      if (!result && /^[1-9]$/.test(e.key)) {
-        const i = Number(e.key) - 1;
-        if (i < chips.length) {
-          e.preventDefault();
-          choose(chips[i]);
-        }
+      if (!result && /^[1-4]$/.test(e.key) && item) {
+        e.preventDefault();
+        choose(Number(e.key) - 1);
       }
     };
     window.addEventListener("keydown", handler);
@@ -139,17 +139,17 @@ export function ParticleTrainer() {
   if (phase === "setup") {
     return (
       <div className="space-y-4">
-        <ParticleTrainerSetup
+        <KanjiTrainerSetup
           settings={settings}
           onChange={setSettings}
           onStart={() => start()}
         />
-        {eligibleDrills(settings).length === 0 && (
+        {eligibleEntries(settings).length < 4 && (
           <p className="rounded-xl border border-warning/40 bg-warning-soft/40 p-3 text-sm">
-            {t(STR.pt_no_drills)}
+            {t(STR.kj_no_words)}
           </p>
         )}
-        <PracticeStatsPanel stats={stats} renderKey={(k) => k} />
+        <PracticeStatsPanel stats={stats} />
       </div>
     );
   }
@@ -190,27 +190,28 @@ export function ParticleTrainer() {
             <h3 className="text-sm font-semibold text-muted">
               {t({ en: "Review these", id: "Ulas ini" })}
             </h3>
-            <ul className="space-y-2 text-sm">
-              {wrong.map((d) => (
-                <li key={d.key}>
-                  <p className="font-jp">
-                    {furigana(d.ja.replace("___", `【${d.answer}】`))}
-                  </p>
-                  <p className="text-xs text-muted">{t(d.why)}</p>
+            <ul className="space-y-1.5 text-sm">
+              {wrong.map((q) => (
+                <li key={q.key} className="flex flex-wrap items-baseline gap-x-2">
+                  <span className="font-jp font-medium">{q.entry.kanji}</span>
+                  <span className="font-jp text-xs text-muted">（{q.entry.kana}）</span>
+                  <span className="text-xs text-muted">{gloss(q.entry.meaning)}</span>
                 </li>
               ))}
             </ul>
           </Card>
         )}
 
-        <PracticeStatsPanel stats={stats} renderKey={(k) => k} />
+        <PracticeStatsPanel
+          stats={stats}
+          renderKey={(key) => key}
+        />
       </div>
     );
   }
 
   // ---- playing ----
   if (!item) return null;
-  const [before, after] = item.ja.split("___");
 
   return (
     <div className="space-y-4">
@@ -245,45 +246,40 @@ export function ParticleTrainer() {
         </div>
       )}
 
-      <Card className="space-y-4">
-        <p className="text-center font-jp text-xl leading-relaxed sm:text-2xl">
-          {furigana(before ?? "")}
-          <span
-            className={cn(
-              "mx-1 inline-flex min-w-9 items-center justify-center rounded-md border-b-2 px-2 py-0.5 font-bold",
-              !result && "border-primary bg-primary-soft/50 text-primary",
-              result === "right" && "border-success bg-success-soft/60 text-success",
-              result === "wrong" && "border-danger bg-danger/10 text-danger",
-            )}
-          >
-            {picked ?? "？"}
-          </span>
-          {furigana(after ?? "")}
+      <Card className="space-y-4 text-center">
+        <div className="inline-flex items-center gap-1.5 rounded-full bg-primary-soft px-3 py-1 text-xs font-medium text-primary">
+          {t(MODE_LABEL[item.mode])}
+        </div>
+
+        <p
+          className={cn(
+            "font-jp font-bold",
+            item.promptKind === "kanji" ? "text-5xl" : "text-3xl",
+          )}
+        >
+          {item.prompt}
         </p>
 
-        <p className="text-center text-sm text-fg/70">
-          {lang === "id" ? item.gloss.id : item.gloss.en}
-        </p>
-
-        <div className="flex flex-wrap justify-center gap-2">
-          {chips.map((p) => {
-            const isAnswer =
-              !!result && (p === item.answer || (item.accept?.includes(p) ?? false));
-            const isPicked = p === picked;
+        <div className="mx-auto grid max-w-sm gap-2 sm:grid-cols-2">
+          {item.options.map((opt, i) => {
+            const label = typeof opt === "string" ? opt : gloss(opt);
+            const isAnswer = i === item.answer;
+            const isPicked = i === picked;
             return (
               <button
-                key={p}
+                key={i}
                 disabled={!!result}
-                onClick={() => choose(p)}
+                onClick={() => choose(i)}
                 className={cn(
-                  "min-w-12 rounded-xl border-2 px-3 py-2 font-jp text-lg font-bold transition-colors",
+                  "rounded-xl border-2 px-3 py-2.5 text-sm font-medium transition-colors",
+                  item.mode === "meaning" ? "text-left" : "font-jp text-lg",
                   !result && "border-border hover:border-primary hover:bg-surface-2",
                   result && isAnswer && "border-success bg-success-soft/60 text-success",
                   result && isPicked && !isAnswer && "border-danger bg-danger/10 text-danger",
                   result && !isPicked && !isAnswer && "border-border opacity-40",
                 )}
               >
-                {p}
+                {label}
               </button>
             );
           })}
@@ -304,11 +300,13 @@ export function ParticleTrainer() {
                 result === "right" ? "text-success" : "text-danger",
               )}
             >
-              {result === "right"
-                ? `✓ ${t(STR.conj_correct)}`
-                : `✕ ${t(STR.conj_incorrect)} — ${item.answer}`}
+              {result === "right" ? `✓ ${t(STR.conj_correct)}` : `✕ ${t(STR.conj_incorrect)}`}
             </p>
-            <p className="mt-1 text-muted">{t(item.why)}</p>
+            <p className="mt-1 font-jp text-base">
+              <b>{item.entry.kanji}</b>
+              <span className="text-muted"> （{item.entry.kana}）</span>
+              <span className="text-fg/70"> — {gloss(item.entry.meaning)}</span>
+            </p>
           </div>
         )}
 
