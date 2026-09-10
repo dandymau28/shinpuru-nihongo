@@ -1,7 +1,11 @@
 /**
  * Wāpuro-style rōmaji → hiragana, for learners practising without a Japanese IME.
- * Converts greedily left to right; unconverted trailing romaji (a partial
- * syllable being typed) is left as-is.
+ * Converts greedily left to right; an unfinished syllable being typed (including a
+ * lone trailing "n") is left as raw rōmaji so it can still combine with the next
+ * keystroke — "n" then "o" becomes "の", not "ん" + "お".
+ *
+ * Pass `{ final: true }` when the answer is submitted to resolve any leftover
+ * "n" → "ん".
  */
 
 const DIGRAPHS: Record<string, string> = {
@@ -33,14 +37,14 @@ const BASE: Record<string, string> = {
   ma: "ま", mi: "み", mu: "む", me: "め", mo: "も",
   ya: "や", yu: "ゆ", yo: "よ",
   ra: "ら", ri: "り", ru: "る", re: "れ", ro: "ろ",
-  wa: "わ", wo: "を", nn: "ん",
+  wa: "わ", wo: "を",
   "-": "ー", ".": "。", ",": "、",
 };
 
 const VOWELS = new Set(["a", "i", "u", "e", "o"]);
 
-export function romajiToKana(input: string): string {
-  let s = input.toLowerCase();
+export function romajiToKana(input: string, opts?: { final?: boolean }): string {
+  const s = input.toLowerCase();
   let out = "";
   let i = 0;
 
@@ -59,7 +63,8 @@ export function romajiToKana(input: string): string {
       continue;
     }
 
-    // ん: "n'" or "n" not followed by a vowel/y
+    // ん — only commit when it can't begin a な-row / にゃ syllable. A trailing
+    // "n" (or "n" + vowel/y being typed) is left raw so "no" → "の".
     if (c === "n") {
       const next = s[i + 1];
       if (next === "'" || next === " ") {
@@ -67,8 +72,8 @@ export function romajiToKana(input: string): string {
         i += 2;
         continue;
       }
-      if (next === undefined || (!VOWELS.has(next) && next !== "y" && next !== "n")) {
-        out += "ん";
+      if (next !== undefined && !VOWELS.has(next) && next !== "y") {
+        out += "ん"; // "n" before a consonant, or the first of "nn"
         i += 1;
         continue;
       }
@@ -109,5 +114,7 @@ export function romajiToKana(input: string): string {
     i += 1;
   }
 
+  // On submit, resolve any still-pending "n" → "ん".
+  if (opts?.final) out = out.replace(/n/g, "ん");
   return out;
 }

@@ -87,7 +87,10 @@ export function ConjugationTrainer() {
 
   function grade(revealed = false) {
     if (!item || result) return;
-    const ok = !revealed && answerMatches(value, item.answer.accept);
+    const submitted =
+      settings.input === "romaji" ? romajiToKana(value, { final: true }) : value;
+    if (submitted !== value) setValue(submitted);
+    const ok = !revealed && answerMatches(submitted, item.answer.accept);
     setResult(revealed ? "revealed" : ok ? "right" : "wrong");
     setSeen((s) => s + 1);
     if (ok) {
