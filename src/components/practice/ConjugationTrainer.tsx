@@ -131,8 +131,7 @@ export function ConjugationTrainer() {
   // ---- render ----
   if (phase === "setup") {
     return (
-      <div className="space-y-6">
-        <ConjugationStatsPanel stats={stats} />
+      <div className="space-y-4">
         <ConjugationSettingsPanel
           settings={settings}
           onChange={setSettings}
@@ -143,6 +142,7 @@ export function ConjugationTrainer() {
             {t(STR.conj_no_pairs)}
           </p>
         )}
+        <ConjugationStatsPanel stats={stats} />
       </div>
     );
   }

@@ -14,13 +14,8 @@ export function ConjugationStatsPanel({
   const { t } = useSettings();
   const { stats: s, ranked, reset, hydrated } = stats;
 
-  if (!hydrated || s.totalSeen === 0) {
-    return (
-      <Card>
-        <p className="text-sm text-muted">{t(STR.conj_weak_none)}</p>
-      </Card>
-    );
-  }
+  // Nothing to show yet — keep the setup screen clean for new learners.
+  if (!hydrated || s.totalSeen === 0) return null;
 
   const acc = Math.round((s.totalCorrect / s.totalSeen) * 100);
 

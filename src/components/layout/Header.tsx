@@ -15,7 +15,7 @@ function NavLink({ href, label }: { href: string; label: string }) {
     <Link
       href={href}
       className={cn(
-        "rounded-lg px-3 py-1.5 text-sm font-medium transition-colors",
+        "shrink-0 rounded-lg px-2.5 py-1.5 text-sm font-medium transition-colors sm:px-3",
         active ? "bg-surface-2 text-fg" : "text-muted hover:text-fg",
       )}
     >
@@ -39,33 +39,33 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-30 border-b border-border bg-bg/80 backdrop-blur">
-      <div className="mx-auto flex w-full max-w-5xl items-center gap-2 px-4 py-3 sm:px-6">
-        <Link href="/" className="mr-1 flex items-center gap-2">
-          <span className="grid size-8 place-items-center rounded-lg bg-primary text-primary-fg font-bold">
+      <div className="mx-auto flex w-full max-w-5xl items-center gap-2 px-3 py-3 sm:px-6">
+        <Link href="/" className="flex shrink-0 items-center gap-2">
+          <span className="grid size-8 place-items-center rounded-lg bg-primary font-bold text-primary-fg">
             日
           </span>
-          <span className="hidden text-sm font-semibold sm:block">
-            {t(STR.appName)}
-          </span>
+          <span className="hidden text-sm font-semibold sm:block">{t(STR.appName)}</span>
         </Link>
 
-        <nav className="flex items-center gap-1">
+        <nav className="flex min-w-0 flex-1 items-center gap-0.5 overflow-x-auto sm:gap-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           <NavLink href="/" label={t(STR.nav_dashboard)} />
           <NavLink href="/planner" label={t(STR.nav_planner)} />
           <NavLink href="/practice" label={t(STR.nav_practice)} />
         </nav>
 
-        <div className="ml-auto flex items-center gap-2" ref={menuRef}>
-          <Segmented
-            size="sm"
-            ariaLabel={t(STR.aid_language)}
-            options={[
-              { value: "en", label: "EN" },
-              { value: "id", label: "ID" },
-            ]}
-            value={lang}
-            onChange={setLang}
-          />
+        <div className="flex shrink-0 items-center gap-2" ref={menuRef}>
+          <div className="hidden sm:block">
+            <Segmented
+              size="sm"
+              ariaLabel={t(STR.aid_language)}
+              options={[
+                { value: "en", label: "EN" },
+                { value: "id", label: "ID" },
+              ]}
+              value={lang}
+              onChange={setLang}
+            />
+          </div>
           <div className="relative">
             <button
               onClick={() => setOpen((v) => !v)}
@@ -80,8 +80,20 @@ export function Header() {
             </button>
 
             {open && (
-              <div className="absolute right-0 mt-2 w-64 rounded-2xl border border-border bg-surface p-3 shadow-lg">
+              <div className="absolute right-0 mt-2 w-60 rounded-2xl border border-border bg-surface p-3 shadow-lg">
                 <div className="space-y-3">
+                  <div className="sm:hidden">
+                    <p className="mb-1.5 text-xs font-medium text-muted">{t(STR.aid_language)}</p>
+                    <Segmented
+                      size="sm"
+                      value={lang}
+                      onChange={setLang}
+                      options={[
+                        { value: "en", label: "English" },
+                        { value: "id", label: "Indonesia" },
+                      ]}
+                    />
+                  </div>
                   <div>
                     <p className="mb-1.5 text-xs font-medium text-muted">{t(STR.aid_theme)}</p>
                     <Segmented

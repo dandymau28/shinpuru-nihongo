@@ -34,37 +34,55 @@ export const DEFAULT_SETTINGS: PracticeSettings = {
   jlpt: ["N5"],
   classes: ["godan", "ichidan", "suru", "kuru", "iku", "i-adj", "ii-adj", "na-adj"],
   forms: ["polite-nonpast", "plain-nonpast-neg", "plain-past", "te"],
-  mode: "endless",
+  mode: "set20",
   input: "romaji",
   showMeaning: "always",
   showReading: "after",
 };
 
-export const PRESETS: { id: string; label: Bi; forms: string[] }[] = [
+export interface Preset {
+  id: string;
+  label: Bi;
+  hint: Bi;
+  forms: string[];
+  jlpt: ("N5" | "N4")[];
+}
+
+export const PRESETS: Preset[] = [
   {
-    id: "n5-core",
-    label: { en: "N5 essentials", id: "Dasar N5" },
+    id: "n5-basics",
+    label: { en: "N5 · Basics", id: "N5 · Dasar" },
+    hint: { en: "polite, negative, past, て-form", id: "sopan, negatif, lampau, bentuk て" },
     forms: ["polite-nonpast", "plain-nonpast-neg", "plain-past", "te"],
+    jlpt: ["N5"],
   },
   {
-    id: "n5-full",
-    label: { en: "All N5 forms", id: "Semua bentuk N5" },
+    id: "n5-all",
+    label: { en: "N5 · All forms", id: "N5 · Semua bentuk" },
+    hint: { en: "every form covered in N5", id: "semua bentuk yang ada di N5" },
     forms: N5_FORMS,
+    jlpt: ["N5"],
   },
   {
-    id: "predicate",
-    label: { en: "Full predicate matrix", id: "Matriks predikat lengkap" },
-    forms: CONJ_FORMS.filter((f) => f.category === "predicate").map((f) => f.id),
+    id: "n4-intent",
+    label: { en: "N4 · Volitional & conditionals", id: "N4 · Ajakan & pengandaian" },
+    hint: { en: "〜よう · 〜られる · 〜ば · 〜たら", id: "〜よう · 〜られる · 〜ば · 〜たら" },
+    forms: ["volitional", "volitional-polite", "potential", "ba", "tara"],
+    jlpt: ["N5", "N4"],
   },
   {
-    id: "n4-advanced",
-    label: { en: "N4 advanced (passive, causative…)", id: "Lanjutan N4 (pasif, kausatif…)" },
-    forms: ["potential", "passive", "causative", "causative-passive", "volitional", "imperative", "ba", "tara"],
+    id: "n4-passive",
+    label: { en: "N4 · Passive & causative", id: "N4 · Pasif & kausatif" },
+    hint: { en: "〜れる · 〜せる · 〜せられる · 〜ろ", id: "〜れる · 〜せる · 〜せられる · 〜ろ" },
+    forms: ["passive", "causative", "causative-passive", "imperative", "prohibitive"],
+    jlpt: ["N5", "N4"],
   },
   {
     id: "everything",
     label: { en: "Everything", id: "Semuanya" },
+    hint: { en: "all forms · N5 + N4 words", id: "semua bentuk · kata N5 + N4" },
     forms: ALL_FORMS,
+    jlpt: ["N5", "N4"],
   },
 ];
 
