@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useSettings } from "@/context/SettingsContext";
 import { STR } from "@/lib/strings";
 import { cn } from "@/lib/cn";
@@ -14,6 +15,7 @@ import type { FormCategory } from "@/lib/conjugation";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Segmented } from "@/components/ui/Segmented";
+import { Modal } from "@/components/ui/Modal";
 
 const CLASS_GROUPS: { key: string; label: keyof typeof STR; classes: WordClass[] }[] = [
   { key: "godan", label: "conj_cls_godan", classes: ["godan", "iku"] },
@@ -53,6 +55,7 @@ export function ConjugationSettingsPanel({
   onStart: () => void;
 }) {
   const { t } = useSettings();
+  const [advOpen, setAdvOpen] = useState(false);
   const set = (patch: Partial<PracticeSettings>) => onChange({ ...settings, ...patch });
   const activePreset = PRESETS.find((p) => sameSet(settings.forms, p.forms));
 
@@ -77,7 +80,19 @@ export function ConjugationSettingsPanel({
     <div className="space-y-4">
       {/* Preset picker — the main choice */}
       <Card className="space-y-3">
-        <h2 className="text-sm font-semibold">{t(STR.conj_pick_what)}</h2>
+        <div className="flex items-center justify-between gap-3">
+          <h2 className="text-sm font-semibold">{t(STR.conj_pick_what)}</h2>
+          <button
+            onClick={() => setAdvOpen(true)}
+            className="inline-flex shrink-0 items-center gap-1 rounded-lg border border-border px-2.5 py-1 text-xs font-medium text-muted hover:bg-surface-2 hover:text-fg"
+          >
+            <svg viewBox="0 0 24 24" className="size-3.5" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M3 6h18M7 12h10M11 18h2" />
+            </svg>
+            {t(STR.conj_advanced)}
+          </button>
+        </div>
+
         <div className="grid gap-2 sm:grid-cols-2">
           {PRESETS.map((p) => {
             const on = activePreset?.id === p.id;
@@ -101,6 +116,13 @@ export function ConjugationSettingsPanel({
             );
           })}
         </div>
+
+        {!activePreset && (
+          <p className="text-xs text-muted">
+            {t(STR.conj_custom_selection)} · {settings.forms.length}{" "}
+            {t(STR.conj_forms_short)}
+          </p>
+        )}
       </Card>
 
       {/* Two quick per-session controls */}
@@ -135,22 +157,37 @@ export function ConjugationSettingsPanel({
         {t(STR.conj_start)} · {settings.forms.length} {t(STR.conj_forms_short)} →
       </Button>
 
-      {/* Everything else, tucked away */}
-      <details className="group rounded-2xl border border-border bg-surface">
-        <summary className="flex cursor-pointer list-none items-center justify-between p-4 text-sm font-medium [&::-webkit-details-marker]:hidden">
-          <span>{t(STR.conj_customize)}</span>
-          <svg
-            viewBox="0 0 24 24"
-            className="size-4 text-muted transition-transform group-open:rotate-180"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-          >
-            <path d="m6 9 6 6 6-6" />
-          </svg>
-        </summary>
+      {/* Advanced / specific settings */}
+      <Modal
+        open={advOpen}
+        onClose={() => setAdvOpen(false)}
+        title={t(STR.conj_advanced_title)}
+        footer={
+          <Button className="w-full" onClick={() => setAdvOpen(false)}>
+            {t(STR.conj_done)} · {settings.forms.length} {t(STR.conj_forms_short)}
+          </Button>
+        }
+      >
+        <div className="space-y-5">
+          <p className="text-xs text-muted">{t(STR.conj_advanced_intro)}</p>
 
-        <div className="space-y-4 border-t border-border p-4">
+          <div className="flex flex-wrap gap-1.5">
+            {PRESETS.map((p) => (
+              <button
+                key={p.id}
+                onClick={() => set({ forms: p.forms, jlpt: p.jlpt })}
+                className={cn(
+                  "rounded-full border px-2.5 py-1 text-xs transition-colors",
+                  activePreset?.id === p.id
+                    ? "border-primary bg-primary-soft text-primary"
+                    : "border-border text-muted hover:bg-surface-2",
+                )}
+              >
+                {t(p.label)}
+              </button>
+            ))}
+          </div>
+
           <div>
             <p className="mb-1.5 text-xs font-semibold text-muted">{t(STR.conj_level)}</p>
             <Segmented
@@ -211,6 +248,7 @@ export function ConjugationSettingsPanel({
                             key={f.id}
                             onClick={() => toggleForm(f.id)}
                             title={t(f.explain)}
+                            aria-pressed={on}
                             className={cn(
                               "rounded-lg border px-2 py-1 text-xs transition-colors",
                               on
@@ -255,7 +293,7 @@ export function ConjugationSettingsPanel({
             </div>
           </div>
         </div>
-      </details>
+      </Modal>
     </div>
   );
 }
