@@ -125,6 +125,35 @@ function shuffle<T>(a: T[]): T[] {
   return r;
 }
 
+/** Particles most easily confused with each — used to pick good distractors. */
+const CONFUSABLE: Record<string, string[]> = {
+  は: ["が", "も", "を"],
+  が: ["は", "を", "の"],
+  を: ["が", "に", "は"],
+  に: ["で", "へ", "を"],
+  で: ["に", "を", "へ"],
+  へ: ["に", "で", "を"],
+  と: ["も", "に", "か"],
+  も: ["は", "が", "と"],
+  の: ["が", "を", "に"],
+  か: ["と", "の", "も"],
+  から: ["まで", "に", "で"],
+  まで: ["から", "に", "へ"],
+};
+
+/**
+ * The 4 (or fewer) answer buttons for one drill: the answer plus up to three
+ * confusable distractors, all drawn from the active particle set.
+ */
+export function optionsFor(drill: ParticleDrill, active: string[]): string[] {
+  const answer = drill.answer;
+  const set = new Set(active);
+  const preferred = (CONFUSABLE[answer] ?? []).filter((p) => p !== answer && set.has(p));
+  const rest = active.filter((p) => p !== answer && !preferred.includes(p));
+  const distractors = [...preferred, ...shuffle(rest)].slice(0, 3);
+  return shuffle([answer, ...distractors]);
+}
+
 /** Drills whose answer(s) are all inside the active particle set. */
 export function eligibleDrills(s: ParticleSettings): ParticleDrill[] {
   const set = new Set(s.particles);

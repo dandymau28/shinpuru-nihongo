@@ -10,6 +10,7 @@ import {
   buildQueue,
   eligibleDrills,
   loadSettings,
+  optionsFor,
   saveSettings,
   sessionLength,
   type ParticleDrill,
@@ -51,9 +52,12 @@ export function ParticleTrainer() {
 
   const total = sessionLength(settings.mode);
   const item = queue[pos % Math.max(queue.length, 1)];
-  const chips = useMemo(
-    () => settings.particles.slice().sort((a, b) => a.length - b.length),
-    [settings.particles],
+  // 4 (or fewer) answer buttons for this question — the answer + confusable
+  // distractors. Stable per question so it doesn't reshuffle on re-render.
+  const options = useMemo(
+    () => (item ? optionsFor(item, settings.particles) : []),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [pos, item?.key],
   );
 
   const start = useCallback(
@@ -112,7 +116,7 @@ export function ParticleTrainer() {
     setResult(null);
   }
 
-  // Enter → next; number keys 1-9 → pick the nth chip.
+  // Enter → next; number keys 1-4 → pick the nth option.
   useEffect(() => {
     if (phase !== "playing") return;
     const handler = (e: KeyboardEvent) => {
@@ -125,9 +129,9 @@ export function ParticleTrainer() {
       }
       if (!result && /^[1-9]$/.test(e.key)) {
         const i = Number(e.key) - 1;
-        if (i < chips.length) {
+        if (i < options.length) {
           e.preventDefault();
-          choose(chips[i]);
+          choose(options[i]);
         }
       }
     };
@@ -265,8 +269,13 @@ export function ParticleTrainer() {
           {lang === "id" ? item.gloss.id : item.gloss.en}
         </p>
 
-        <div className="flex flex-wrap justify-center gap-2">
-          {chips.map((p) => {
+        <div
+          className={cn(
+            "mx-auto grid max-w-xs gap-2",
+            options.length > 2 ? "grid-cols-2" : "grid-cols-1",
+          )}
+        >
+          {options.map((p) => {
             const isAnswer =
               !!result && (p === item.answer || (item.accept?.includes(p) ?? false));
             const isPicked = p === picked;
@@ -276,7 +285,7 @@ export function ParticleTrainer() {
                 disabled={!!result}
                 onClick={() => choose(p)}
                 className={cn(
-                  "min-w-12 rounded-xl border-2 px-3 py-2 font-jp text-lg font-bold transition-colors",
+                  "rounded-xl border-2 px-3 py-2.5 font-jp text-lg font-bold transition-colors",
                   !result && "border-border hover:border-primary hover:bg-surface-2",
                   result && isAnswer && "border-success bg-success-soft/60 text-success",
                   result && isPicked && !isAnswer && "border-danger bg-danger/10 text-danger",
