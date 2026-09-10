@@ -103,3 +103,61 @@ ruby rt {
     transition-duration: 0.001ms !important;
   }
 }
+
+/* Streak party-popper */
+.sn-confetti {
+  position: absolute;
+  top: -8vh;
+  border-radius: 2px;
+  will-change: transform, opacity;
+  animation-name: sn-confetti-fall;
+  animation-timing-function: cubic-bezier(0.15, 0.55, 0.35, 1);
+  animation-fill-mode: forwards;
+}
+
+@keyframes sn-confetti-fall {
+  0% {
+    transform: translate3d(0, 0, 0) rotate(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(var(--sn-drift, 0), 118vh, 0) rotate(var(--sn-spin, 360deg));
+    opacity: 0;
+  }
+}
+
+.sn-pop {
+  animation: sn-pop 2.6s ease forwards;
+}
+
+@keyframes sn-pop {
+  0% {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  12% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  24% {
+    transform: scale(1);
+  }
+  82% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sn-confetti {
+    display: none !important;
+  }
+  .sn-pop {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+}

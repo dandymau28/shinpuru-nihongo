@@ -201,9 +201,20 @@ export interface ConjStats {
   totalSeen: number;
   totalCorrect: number;
   byForm: Record<string, FormStat>;
+  /** Streak milestones the learner has already celebrated (once ever). */
+  celebrated: number[];
 }
 
-const EMPTY_STATS: ConjStats = { bestStreak: 0, totalSeen: 0, totalCorrect: 0, byForm: {} };
+/** Streaks that trigger a one-time party-popper the first time they're reached. */
+export const STREAK_MILESTONES = [10, 20, 40, 80, 100];
+
+const EMPTY_STATS: ConjStats = {
+  bestStreak: 0,
+  totalSeen: 0,
+  totalCorrect: 0,
+  byForm: {},
+  celebrated: [],
+};
 const STORAGE_STATS = "sn.conj.stats";
 
 export function useConjStats() {
@@ -213,7 +224,14 @@ export function useConjStats() {
   useEffect(() => {
     try {
       const raw = localStorage.getItem(STORAGE_STATS);
-      if (raw) setStats({ ...EMPTY_STATS, ...JSON.parse(raw) });
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        setStats({
+          ...EMPTY_STATS,
+          ...parsed,
+          celebrated: Array.isArray(parsed.celebrated) ? parsed.celebrated : [],
+        });
+      }
     } catch {
       /* ignore */
     }
@@ -233,6 +251,7 @@ export function useConjStats() {
     setStats((s) => {
       const cur = s.byForm[formId] ?? { seen: 0, correct: 0 };
       return {
+        ...s,
         bestStreak: Math.max(s.bestStreak, streak),
         totalSeen: s.totalSeen + 1,
         totalCorrect: s.totalCorrect + (correct ? 1 : 0),
@@ -242,6 +261,15 @@ export function useConjStats() {
         },
       };
     });
+  }, []);
+
+  /** Record that a streak milestone was celebrated (persists across sessions). */
+  const markCelebrated = useCallback((milestone: number) => {
+    setStats((s) =>
+      s.celebrated.includes(milestone)
+        ? s
+        : { ...s, celebrated: [...s.celebrated, milestone] },
+    );
   }, []);
 
   const reset = useCallback(() => setStats(EMPTY_STATS), []);
@@ -269,7 +297,7 @@ export function useConjStats() {
     [stats],
   );
 
-  return { stats, hydrated, record, reset, weakForms, ranked };
+  return { stats, hydrated, record, markCelebrated, reset, weakForms, ranked };
 }
 
 export { CONJ_FORMS, wordKind, ALL_CLASSES };

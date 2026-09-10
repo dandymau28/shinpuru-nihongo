@@ -10,6 +10,7 @@ import { romajiToKana } from "@/lib/romaji";
 import { FORM_BY_ID } from "@/lib/conjugation";
 import {
   DEFAULT_SETTINGS,
+  STREAK_MILESTONES,
   buildQueue,
   loadSettings,
   saveSettings,
@@ -22,6 +23,7 @@ import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { ConjugationSettingsPanel } from "./ConjugationSettingsPanel";
 import { ConjugationStatsPanel } from "./ConjugationStatsPanel";
+import { StreakCelebration } from "./StreakCelebration";
 
 type Phase = "setup" | "playing" | "summary";
 
@@ -58,6 +60,7 @@ export function ConjugationTrainer() {
   const [seen, setSeen] = useState(0);
   const [correct, setCorrect] = useState(0);
   const [wrongItems, setWrongItems] = useState<PracticeItem[]>([]);
+  const [celebration, setCelebration] = useState<{ milestone: number; id: number } | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const total = sessionLength(settings.mode);
@@ -77,6 +80,7 @@ export function ConjugationTrainer() {
       setSeen(0);
       setCorrect(0);
       setWrongItems([]);
+      setCelebration(null);
       setPhase("playing");
       setTimeout(() => inputRef.current?.focus(), 30);
     },
@@ -95,11 +99,18 @@ export function ConjugationTrainer() {
     setSeen((s) => s + 1);
     if (ok) {
       setCorrect((c) => c + 1);
-      setStreak((s) => {
-        const ns = s + 1;
-        setBest((b) => Math.max(b, ns));
-        return ns;
-      });
+      const newStreak = streak + 1;
+      setStreak(newStreak);
+      setBest((b) => Math.max(b, newStreak));
+      // Party-popper on a milestone the learner has never reached before.
+      if (
+        stats.hydrated &&
+        STREAK_MILESTONES.includes(newStreak) &&
+        !stats.stats.celebrated.includes(newStreak)
+      ) {
+        stats.markCelebrated(newStreak);
+        setCelebration({ milestone: newStreak, id: Date.now() });
+      }
     } else {
       setStreak(0);
       setWrongItems((w) => (w.some((x) => x.word.kana === item.word.kana && x.formId === item.formId) ? w : [...w, item]));
@@ -161,6 +172,9 @@ export function ConjugationTrainer() {
     const pct = seen > 0 ? Math.round((correct / seen) * 100) : 0;
     return (
       <div className="space-y-5">
+        {celebration && (
+          <StreakCelebration milestone={celebration.milestone} runId={celebration.id} />
+        )}
         <Card className="space-y-2 text-center">
           <p className="text-sm text-muted">{t(STR.conj_session_done)}</p>
           <p className="text-4xl font-bold tabular-nums">
@@ -217,6 +231,9 @@ export function ConjugationTrainer() {
 
   return (
     <div className="space-y-4">
+      {celebration && (
+        <StreakCelebration milestone={celebration.milestone} runId={celebration.id} />
+      )}
       <div className="flex items-center gap-3 text-sm">
         <span className="rounded-lg bg-surface-2 px-2 py-1">
           {t(STR.conj_streak)} <b className="tabular-nums">{streak}</b>
