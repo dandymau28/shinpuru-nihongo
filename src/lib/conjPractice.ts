@@ -205,8 +205,7 @@ export interface ConjStats {
   celebrated: number[];
 }
 
-/** Streaks that trigger a one-time party-popper the first time they're reached. */
-export const STREAK_MILESTONES = [10, 20, 40, 80, 100];
+export { STREAK_MILESTONES } from "./practiceStats";
 
 const EMPTY_STATS: ConjStats = {
   bestStreak: 0,

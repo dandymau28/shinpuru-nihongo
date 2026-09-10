@@ -25,6 +25,20 @@ export const STR = {
     en: "Drill every N5–N4 verb and adjective form — pick the forms, type the answer, build a streak.",
     id: "Latih setiap bentuk verba & kata sifat N5–N4 — pilih bentuknya, ketik jawaban, kumpulkan runtun.",
   },
+  practice_particles_name: { en: "Particle Trainer", id: "Latihan Partikel" },
+  practice_particles_desc: {
+    en: "Fill-in-the-blank drills for は が を に で へ and more — tap the right particle, with は-vs-が and に-vs-で focus sets.",
+    id: "Latihan isi-titik untuk は が を に で へ dan lainnya — ketuk partikel yang tepat, dengan set fokus は-vs-が dan に-vs-で.",
+  },
+
+  // Particle trainer
+  pt_title: { en: "Particle Trainer", id: "Latihan Partikel" },
+  pt_pick_what: { en: "What do you want to drill?", id: "Mau latihan yang mana?" },
+  pt_choose_particles: { en: "Choose particles", id: "Pilih partikel" },
+  pt_no_drills: {
+    en: "No sentences match — pick more particles or a wider level.",
+    id: "Tidak ada kalimat yang cocok — pilih lebih banyak partikel atau tingkat yang lebih luas.",
+  },
 
   // Conjugation trainer
   conj_title: { en: "Conjugation Trainer", id: "Latihan Konjugasi" },

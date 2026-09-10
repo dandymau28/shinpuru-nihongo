@@ -14,6 +14,12 @@ const TOOLS = [
     name: STR.practice_conj_name,
     desc: STR.practice_conj_desc,
   },
+  {
+    href: "/practice/particles",
+    emoji: "🧩",
+    name: STR.practice_particles_name,
+    desc: STR.practice_particles_desc,
+  },
 ];
 
 export default function PracticePage() {
