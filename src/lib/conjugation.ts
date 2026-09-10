@@ -105,31 +105,18 @@ const I = "i-adj" as const;
 const NA = "na-adj" as const;
 
 export const CONJ_FORMS: ConjForm[] = [
-  // Predicate matrix
-  {
-    id: "plain-nonpast",
-    label: { en: "Plain non-past", id: "Biasa non-lampau" },
-    jp: "辞書形 / だ",
-    emoji: "📖",
-    category: "predicate",
-    applies: [V, I, NA],
-    tier: "N5",
-    explain: {
-      en: "Verbs: the dictionary form. い-adj: unchanged. な-adj / noun: + だ.",
-      id: "Verba: bentuk kamus. Kata sifat い: tetap. Kata sifat な / nomina: + だ.",
-    },
-  },
+  // --- Verb: predicate matrix -------------------------------------------
   {
     id: "plain-nonpast-neg",
     label: { en: "Plain negative", id: "Biasa negatif" },
     jp: "〜ない",
     emoji: "🚫",
     category: "predicate",
-    applies: [V, I, NA],
+    applies: [V],
     tier: "N5",
     explain: {
-      en: "Godan: う-row → あ-row + ない (う→わ). Ichidan: + ない. い-adj: 〜くない. な-adj: 〜じゃない.",
-      id: "Godan: baris う → baris あ + ない (う→わ). Ichidan: + ない. Sifat い: 〜くない. Sifat な: 〜じゃない.",
+      en: "Godan: う-row → あ-row + ない (う→わ). Ichidan: + ない. する→しない, 来る→こない.",
+      id: "Godan: baris う → baris あ + ない (う→わ). Ichidan: + ない. する→しない, 来る→こない.",
     },
   },
   {
@@ -138,11 +125,11 @@ export const CONJ_FORMS: ConjForm[] = [
     jp: "〜た",
     emoji: "⏮️",
     category: "predicate",
-    applies: [V, I, NA],
+    applies: [V],
     tier: "N5",
     explain: {
-      en: "Same sound changes as て-form (て→た, で→だ). い-adj: 〜かった. な-adj: 〜だった.",
-      id: "Perubahan bunyi sama dengan bentuk て (て→た, で→だ). Sifat い: 〜かった. Sifat な: 〜だった.",
+      en: "Same sound changes as て-form: く→いた, ぐ→いだ, う・つ・る→った, ぬ・ぶ・む→んだ, す→した. 行く→行った.",
+      id: "Perubahan bunyi sama dengan bentuk て: く→いた, ぐ→いだ, う・つ・る→った, ぬ・ぶ・む→んだ, す→した. 行く→行った.",
     },
   },
   {
@@ -151,7 +138,7 @@ export const CONJ_FORMS: ConjForm[] = [
     jp: "〜なかった",
     emoji: "🚫",
     category: "predicate",
-    applies: [V, I, NA],
+    applies: [V],
     tier: "N5",
     explain: {
       en: "Take the plain negative and change 〜ない → 〜なかった.",
@@ -160,15 +147,15 @@ export const CONJ_FORMS: ConjForm[] = [
   },
   {
     id: "polite-nonpast",
-    label: { en: "Polite (ます / です)", id: "Sopan (ます / です)" },
-    jp: "〜ます / です",
+    label: { en: "Polite (ます)", id: "Sopan (ます)" },
+    jp: "〜ます",
     emoji: "🙇",
     category: "predicate",
-    applies: [V, I, NA],
+    applies: [V],
     tier: "N5",
     explain: {
-      en: "Godan: う-row → い-row + ます. Ichidan: + ます. Adjectives: + です.",
-      id: "Godan: baris う → baris い + ます. Ichidan: + ます. Kata sifat: + です.",
+      en: "Godan: う-row → い-row + ます. Ichidan: + ます. する→します, 来る→きます.",
+      id: "Godan: baris う → baris い + ます. Ichidan: + ます. する→します, 来る→きます.",
     },
   },
   {
@@ -177,11 +164,11 @@ export const CONJ_FORMS: ConjForm[] = [
     jp: "〜ません",
     emoji: "🙇",
     category: "predicate",
-    applies: [V, I, NA],
+    applies: [V],
     tier: "N5",
     explain: {
-      en: "Verbs: ます-stem + ません. Adjectives: 〜くないです / 〜じゃないです (also 〜くありません).",
-      id: "Verba: akar ます + ません. Kata sifat: 〜くないです / 〜じゃないです (juga 〜くありません).",
+      en: "ます-stem + ません.",
+      id: "Akar ます + ません.",
     },
   },
   {
@@ -190,11 +177,11 @@ export const CONJ_FORMS: ConjForm[] = [
     jp: "〜ました",
     emoji: "🙇",
     category: "predicate",
-    applies: [V, I, NA],
+    applies: [V],
     tier: "N5",
     explain: {
-      en: "Verbs: ます-stem + ました. い-adj: 〜かったです. な-adj: 〜でした.",
-      id: "Verba: akar ます + ました. Sifat い: 〜かったです. Sifat な: 〜でした.",
+      en: "ます-stem + ました.",
+      id: "Akar ます + ました.",
     },
   },
   {
@@ -203,25 +190,25 @@ export const CONJ_FORMS: ConjForm[] = [
     jp: "〜ませんでした",
     emoji: "🙇",
     category: "predicate",
-    applies: [V, I, NA],
+    applies: [V],
     tier: "N5",
     explain: {
-      en: "Verbs: ます-stem + ませんでした. Adjectives: 〜くなかったです / 〜じゃなかったです.",
-      id: "Verba: akar ます + ませんでした. Kata sifat: 〜くなかったです / 〜じゃなかったです.",
+      en: "ます-stem + ませんでした.",
+      id: "Akar ます + ませんでした.",
     },
   },
-  // て family
+  // --- Verb: て family -------------------------------------------------
   {
     id: "te",
     label: { en: "て-form", id: "Bentuk て" },
     jp: "〜て",
     emoji: "🔗",
     category: "te",
-    applies: [V, I, NA],
+    applies: [V],
     tier: "N5",
     explain: {
-      en: "Godan: う・つ・る→って, ぬ・ぶ・む→んで, く→いて, ぐ→いで, す→して (行く→行って). Ichidan: +て. い-adj: 〜くて. な-adj: 〜で.",
-      id: "Godan: う・つ・る→って, ぬ・ぶ・む→んで, く→いて, ぐ→いで, す→して (行く→行って). Ichidan: +て. Sifat い: 〜くて. Sifat な: 〜で.",
+      en: "Godan: う・つ・る→って, ぬ・ぶ・む→んで, く→いて, ぐ→いで, す→して (行く→行って). Ichidan: +て. する→して, 来る→きて.",
+      id: "Godan: う・つ・る→って, ぬ・ぶ・む→んで, く→いて, ぐ→いで, す→して (行く→行って). Ichidan: +て. する→して, 来る→きて.",
     },
   },
   {
@@ -361,14 +348,14 @@ export const CONJ_FORMS: ConjForm[] = [
   {
     id: "ba",
     label: { en: "〜ば conditional", id: "Pengandaian 〜ば" },
-    jp: "〜ば / 〜ければ",
+    jp: "〜ば",
     emoji: "🔀",
     category: "conditional",
-    applies: [V, I, NA],
+    applies: [V],
     tier: "N4",
     explain: {
-      en: "Godan: う-row → え-row + ば. Ichidan: + れば. い-adj: 〜ければ. な-adj: 〜なら(ば).",
-      id: "Godan: baris う → baris え + ば. Ichidan: + れば. Sifat い: 〜ければ. Sifat な: 〜なら(ば).",
+      en: "Godan: う-row → え-row + ば. Ichidan: + れば. する→すれば, 来る→くれば.",
+      id: "Godan: baris う → baris え + ば. Ichidan: + れば. する→すれば, 来る→くれば.",
     },
   },
   {
@@ -377,18 +364,96 @@ export const CONJ_FORMS: ConjForm[] = [
     jp: "〜たら",
     emoji: "🔀",
     category: "conditional",
-    applies: [V, I, NA],
+    applies: [V],
     tier: "N4",
     explain: {
-      en: "Plain past + ら. Works for every word type.",
-      id: "Bentuk biasa lampau + ら. Berlaku untuk semua jenis kata.",
+      en: "Plain past + ら.",
+      id: "Bentuk biasa lampau + ら.",
     },
   },
-  // Adjective-only
+  // --- Adjectives (い / な) -------------------------------------------
   {
-    id: "adverb",
-    label: { en: "Adverbial (く / に)", id: "Bentuk keterangan (く / に)" },
-    jp: "〜く / 〜に",
+    id: "adj-neg",
+    label: { en: "Adj · negative", id: "Sifat · negatif" },
+    jp: "〜くない / じゃない",
+    emoji: "🚫",
+    category: "adjective",
+    applies: [I, NA],
+    tier: "N5",
+    explain: {
+      en: "い-adj: 〜くない (いい→よくない). な-adj: + じゃない (also ではない).",
+      id: "Sifat い: 〜くない (いい→よくない). Sifat な: + じゃない (juga ではない).",
+    },
+  },
+  {
+    id: "adj-past",
+    label: { en: "Adj · past", id: "Sifat · lampau" },
+    jp: "〜かった / だった",
+    emoji: "⏮️",
+    category: "adjective",
+    applies: [I, NA],
+    tier: "N5",
+    explain: {
+      en: "い-adj: 〜かった (いい→よかった). な-adj: + だった. Never 〜いでした.",
+      id: "Sifat い: 〜かった (いい→よかった). Sifat な: + だった. Bukan 〜いでした.",
+    },
+  },
+  {
+    id: "adj-past-neg",
+    label: { en: "Adj · past negative", id: "Sifat · lampau negatif" },
+    jp: "〜くなかった / じゃなかった",
+    emoji: "🚫",
+    category: "adjective",
+    applies: [I, NA],
+    tier: "N5",
+    explain: {
+      en: "い-adj: 〜くなかった. な-adj: + じゃなかった.",
+      id: "Sifat い: 〜くなかった. Sifat な: + じゃなかった.",
+    },
+  },
+  {
+    id: "adj-polite",
+    label: { en: "Adj · polite (です)", id: "Sifat · sopan (です)" },
+    jp: "〜いです / です",
+    emoji: "🙇",
+    category: "adjective",
+    applies: [I, NA],
+    tier: "N5",
+    explain: {
+      en: "Both types add です to the dictionary form.",
+      id: "Kedua jenis menambahkan です ke bentuk kamus.",
+    },
+  },
+  {
+    id: "adj-polite-past",
+    label: { en: "Adj · polite past", id: "Sifat · sopan lampau" },
+    jp: "〜かったです / でした",
+    emoji: "🙇",
+    category: "adjective",
+    applies: [I, NA],
+    tier: "N5",
+    explain: {
+      en: "い-adj: 〜かったです. な-adj: + でした.",
+      id: "Sifat い: 〜かったです. Sifat な: + でした.",
+    },
+  },
+  {
+    id: "adj-te",
+    label: { en: "Adj · linking て", id: "Sifat · penghubung て" },
+    jp: "〜くて / で",
+    emoji: "🔗",
+    category: "adjective",
+    applies: [I, NA],
+    tier: "N5",
+    explain: {
+      en: "い-adj: 〜くて (いい→よくて). な-adj: + で. Joins clauses.",
+      id: "Sifat い: 〜くて (いい→よくて). Sifat な: + で. Menyambung klausa.",
+    },
+  },
+  {
+    id: "adj-adverb",
+    label: { en: "Adj · adverbial", id: "Sifat · keterangan" },
+    jp: "〜く / に",
     emoji: "🏃",
     category: "adjective",
     applies: [I, NA],
@@ -396,6 +461,32 @@ export const CONJ_FORMS: ConjForm[] = [
     explain: {
       en: "い-adj: 〜い → 〜く (いい→よく). な-adj: + に.",
       id: "Sifat い: 〜い → 〜く (いい→よく). Sifat な: + に.",
+    },
+  },
+  {
+    id: "adj-ba",
+    label: { en: "Adj · 〜ば / なら", id: "Sifat · 〜ば / なら" },
+    jp: "〜ければ / なら",
+    emoji: "🔀",
+    category: "adjective",
+    applies: [I, NA],
+    tier: "N4",
+    explain: {
+      en: "い-adj: 〜ければ. な-adj: 〜なら (also 〜ならば).",
+      id: "Sifat い: 〜ければ. Sifat な: 〜なら (juga 〜ならば).",
+    },
+  },
+  {
+    id: "adj-tara",
+    label: { en: "Adj · 〜たら", id: "Sifat · 〜たら" },
+    jp: "〜かったら / だったら",
+    emoji: "🔀",
+    category: "adjective",
+    applies: [I, NA],
+    tier: "N4",
+    explain: {
+      en: "い-adj: 〜かったら. な-adj: 〜だったら.",
+      id: "Sifat い: 〜かったら. Sifat な: 〜だったら.",
     },
   },
 ];
@@ -522,7 +613,21 @@ function verbTransform(s: string, cls: WordClass, formId: string): string | null
   }
 }
 
-function adjTransform(s: string, cls: WordClass, formId: string): string | null {
+/** Adjective form ids map onto the shared transform logic. */
+const ADJ_ALIAS: Record<string, string> = {
+  "adj-neg": "plain-nonpast-neg",
+  "adj-past": "plain-past",
+  "adj-past-neg": "plain-past-neg",
+  "adj-polite": "polite-nonpast",
+  "adj-polite-past": "polite-past",
+  "adj-te": "te",
+  "adj-adverb": "adverb",
+  "adj-ba": "ba",
+  "adj-tara": "tara",
+};
+
+function adjTransform(s: string, cls: WordClass, formIdRaw: string): string | null {
+  const formId = ADJ_ALIAS[formIdRaw] ?? formIdRaw;
   if (cls === "na-adj") {
     switch (formId) {
       case "plain-nonpast": return s + "だ";
@@ -563,7 +668,8 @@ function adjTransform(s: string, cls: WordClass, formId: string): string | null 
 }
 
 /** Alternate acceptable answers for a given form. */
-function alternates(kanaAns: string, cls: WordClass, formId: string): string[] {
+function alternates(kanaAns: string, cls: WordClass, formIdRaw: string): string[] {
+  const formId = ADJ_ALIAS[formIdRaw] ?? formIdRaw;
   const out: string[] = [];
   if (cls === "ichidan" && (formId === "potential")) {
     // ら-less potential: 見られる → 見れる

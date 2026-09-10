@@ -50,16 +50,23 @@ export interface Preset {
 
 export const PRESETS: Preset[] = [
   {
-    id: "n5-basics",
-    label: { en: "N5 · Basics", id: "N5 · Dasar" },
-    hint: { en: "polite, negative, past, て-form", id: "sopan, negatif, lampau, bentuk て" },
+    id: "n5-verbs",
+    label: { en: "N5 · Verb basics", id: "N5 · Dasar verba" },
+    hint: { en: "ます · ない · た · て", id: "ます · ない · た · て" },
     forms: ["polite-nonpast", "plain-nonpast-neg", "plain-past", "te"],
     jlpt: ["N5"],
   },
   {
+    id: "n5-adjectives",
+    label: { en: "N5 · Adjectives", id: "N5 · Kata sifat" },
+    hint: { en: "〜くない · かった · くて · く / に", id: "〜くない · かった · くて · く / に" },
+    forms: ["adj-neg", "adj-past", "adj-past-neg", "adj-te", "adj-adverb"],
+    jlpt: ["N5"],
+  },
+  {
     id: "n5-all",
-    label: { en: "N5 · All forms", id: "N5 · Semua bentuk" },
-    hint: { en: "every form covered in N5", id: "semua bentuk yang ada di N5" },
+    label: { en: "N5 · Everything", id: "N5 · Semua" },
+    hint: { en: "every N5 verb + adjective form", id: "semua bentuk verba + kata sifat N5" },
     forms: N5_FORMS,
     jlpt: ["N5"],
   },
