@@ -147,7 +147,7 @@ export const CONJ_FORMS: ConjForm[] = [
   },
   {
     id: "polite-nonpast",
-    label: { en: "Polite (ます)", id: "Sopan (ます)" },
+    label: { en: "Polite", id: "Sopan" },
     jp: "〜ます",
     emoji: "🙇",
     category: "predicate",
@@ -213,7 +213,7 @@ export const CONJ_FORMS: ConjForm[] = [
   },
   {
     id: "tai",
-    label: { en: "〜たい (want to)", id: "〜たい (ingin)" },
+    label: { en: "Want to", id: "Ingin" },
     jp: "〜たい",
     emoji: "🙋",
     category: "te",
@@ -226,7 +226,7 @@ export const CONJ_FORMS: ConjForm[] = [
   },
   {
     id: "tai-neg",
-    label: { en: "〜たくない", id: "〜たくない" },
+    label: { en: "Don't want to", id: "Tidak ingin" },
     jp: "〜たくない",
     emoji: "🙅",
     category: "te",
@@ -253,7 +253,7 @@ export const CONJ_FORMS: ConjForm[] = [
   },
   {
     id: "volitional-polite",
-    label: { en: "Volitional polite (〜ましょう)", id: "Ajakan sopan (〜ましょう)" },
+    label: { en: "Volitional polite", id: "Ajakan sopan" },
     jp: "〜ましょう",
     emoji: "🤝",
     category: "volition",
@@ -413,7 +413,7 @@ export const CONJ_FORMS: ConjForm[] = [
   },
   {
     id: "adj-polite",
-    label: { en: "Adj · polite (です)", id: "Sifat · sopan (です)" },
+    label: { en: "Adj · polite", id: "Sifat · sopan" },
     jp: "〜いです / です",
     emoji: "🙇",
     category: "adjective",

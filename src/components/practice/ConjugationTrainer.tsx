@@ -119,12 +119,19 @@ export function ConjugationTrainer() {
     setTimeout(() => inputRef.current?.focus(), 20);
   }
 
-  function onKey(e: React.KeyboardEvent) {
-    if (e.key !== "Enter") return;
-    e.preventDefault();
-    if (result) next();
-    else grade();
-  }
+  // Enter submits, then advances — works even while the input is inert after
+  // grading. Re-bind every render so grade()/next() see current state.
+  useEffect(() => {
+    if (phase !== "playing") return;
+    const handler = (e: KeyboardEvent) => {
+      if (e.key !== "Enter" || e.isComposing) return;
+      e.preventDefault();
+      if (result) next();
+      else grade();
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  });
 
   function onInput(e: React.ChangeEvent<HTMLInputElement>) {
     const raw = e.target.value;
@@ -241,7 +248,6 @@ export function ConjugationTrainer() {
         <div className="inline-flex items-center gap-1.5 rounded-full bg-primary-soft px-3 py-1 text-sm font-medium text-primary">
           <span aria-hidden>{form.emoji}</span>
           {t(form.label)}
-          <span className="font-jp text-xs opacity-70">{form.jp}</span>
         </div>
 
         <div>
@@ -268,9 +274,8 @@ export function ConjugationTrainer() {
           ref={inputRef}
           autoFocus
           value={value}
-          disabled={!!result}
+          readOnly={!!result}
           onChange={onInput}
-          onKeyDown={onKey}
           inputMode={settings.input === "romaji" ? "text" : undefined}
           placeholder={t(STR.conj_type_answer)}
           className={cn(
@@ -325,8 +330,6 @@ export function ConjugationTrainer() {
           )}
         </div>
       </Card>
-
-      <p className="text-center text-xs text-muted">{t(form.explain)}</p>
     </div>
   );
 }
