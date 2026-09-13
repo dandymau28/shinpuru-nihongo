@@ -35,6 +35,11 @@ export const STR = {
     en: "~150 N5–N4 kanji words — drill reading, meaning, or kana → kanji, four options per question.",
     id: "~150 kata kanji N5–N4 — latih bacaan, arti, atau kana → kanji, empat pilihan per soal.",
   },
+  practice_qw_name: { en: "Question Word Trainer", id: "Latihan Kata Tanya" },
+  practice_qw_desc: {
+    en: "何・誰・どこ・いつ and more — fill in the right question word from context, with どの/どれ/どちら and いくつ/いくら focus sets.",
+    id: "何・誰・どこ・いつ dan lainnya — isi kata tanya yang tepat sesuai konteks, dengan set fokus どの/どれ/どちら dan いくつ/いくら.",
+  },
 
   // Particle trainer
   pt_title: { en: "Particle Trainer", id: "Latihan Partikel" },
@@ -43,6 +48,15 @@ export const STR = {
   pt_no_drills: {
     en: "No sentences match — pick more particles or a wider level.",
     id: "Tidak ada kalimat yang cocok — pilih lebih banyak partikel atau tingkat yang lebih luas.",
+  },
+
+  // Question word trainer
+  qw_title: { en: "Question Word Trainer", id: "Latihan Kata Tanya" },
+  qw_pick_what: { en: "What do you want to drill?", id: "Mau latihan yang mana?" },
+  qw_choose_words: { en: "Choose question words", id: "Pilih kata tanya" },
+  qw_no_drills: {
+    en: "No sentences match — pick more question words or a wider level.",
+    id: "Tidak ada kalimat yang cocok — pilih lebih banyak kata tanya atau tingkat yang lebih luas.",
   },
 
   // Kanji trainer

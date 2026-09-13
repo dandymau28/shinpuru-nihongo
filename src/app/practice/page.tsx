@@ -26,6 +26,12 @@ const TOOLS = [
     name: STR.practice_kanji_name,
     desc: STR.practice_kanji_desc,
   },
+  {
+    href: "/practice/questions",
+    emoji: "❓",
+    name: STR.practice_qw_name,
+    desc: STR.practice_qw_desc,
+  },
 ];
 
 export default function PracticePage() {
