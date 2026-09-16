@@ -11,8 +11,25 @@ export const STR = {
   nav_dashboard: { en: "Dashboard", id: "Beranda" },
   nav_planner: { en: "Planner", id: "Planner" },
   nav_practice: { en: "Practice", id: "Latihan" },
+  nav_rangkuman: { en: "Summaries", id: "Rangkuman" },
   nav_settings: { en: "Settings", id: "Pengaturan" },
   nav_about: { en: "About", id: "Tentang" },
+
+  // Rangkuman (materi cheat sheets)
+  rangkuman_title: { en: "Grammar Summaries", id: "Rangkuman Materi" },
+  rangkuman_intro: {
+    en: "Every material's grammar, condensed to its core rules and example usage — no exercises, just the cheat sheet.",
+    id: "Tata bahasa tiap materi, dipadatkan jadi aturan inti dan contoh penggunaan — tanpa latihan, cuma rangkuman cepatnya.",
+  },
+  rangkuman_back: { en: "Back to summaries", id: "Kembali ke rangkuman" },
+  rangkuman_examples: { en: "Example usage", id: "Contoh penggunaan" },
+  rangkuman_open_full: { en: "Open the full lesson", id: "Buka materi lengkap" },
+  rangkuman_view_link: { en: "View summary", id: "Lihat rangkuman" },
+  rangkuman_notes_title: { en: "Your notes", id: "Catatanmu" },
+  rangkuman_notes_help: {
+    en: "Saved in this browser only — jot down what still trips you up.",
+    id: "Tersimpan hanya di browser ini — catat apa yang masih bikin bingung.",
+  },
 
   // Practice hub
   practice_title: { en: "Practice Tools", id: "Alat Latihan" },

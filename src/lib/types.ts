@@ -261,3 +261,27 @@ export type ContentModule =
   | ({ type: "listening" } & ListeningSet)
   | ({ type: "deck" } & DeckModule)
   | ({ type: "skill" } & SkillModule);
+
+// ---------------------------------------------------------------------------
+// Rangkuman — a condensed, exercise-free cheat sheet for a lesson/skill:
+// the core rules distilled to a few bullet points, plus example usage.
+// Separate from `Lesson.sections` on purpose — this is freshly written to be
+// terse, not a re-render of the (longer) full-lesson prose.
+// ---------------------------------------------------------------------------
+
+export interface SummaryPoint {
+  heading: Bi;
+  body: Bi;
+}
+
+export interface MaterialSummary {
+  /** Matches a `Lesson`/`SkillModule` slug in the content registry. */
+  slug: string;
+  title: Bi;
+  titleJa?: string;
+  level: "N5" | "N4";
+  /** One or two sentences framing what this material covers. */
+  intro: Bi;
+  points: SummaryPoint[];
+  examples: Sentence[];
+}

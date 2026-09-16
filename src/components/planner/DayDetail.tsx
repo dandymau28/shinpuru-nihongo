@@ -13,6 +13,8 @@ import { ExternalLinks } from "./ExternalLinks";
 import { ProgressControls } from "./ProgressControls";
 import { DayScoreBar } from "./DayScoreBar";
 import { ContentRenderer } from "@/components/lesson/ContentRenderer";
+import { SummaryLink } from "@/components/lesson/SummaryLink";
+import { hasSummary } from "@/content/summaryRegistry";
 import { getDay } from "@/data/planner";
 
 export function DayDetail({ day }: { day: PlannerDay }) {
@@ -91,7 +93,8 @@ export function DayDetail({ day }: { day: PlannerDay }) {
       <ExternalLinks links={day.links} />
 
       {module ? (
-        <div className="border-t border-border pt-6">
+        <div className="space-y-4 border-t border-border pt-6">
+          {hasSummary(day.lessonSlug) && <SummaryLink slug={day.lessonSlug!} />}
           <ContentRenderer module={module} dayNumber={day.day} />
         </div>
       ) : (

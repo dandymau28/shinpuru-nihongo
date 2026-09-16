@@ -19,6 +19,9 @@ export function Footer() {
           <Link href="/practice" className="hover:text-fg">
             {t(STR.nav_practice)}
           </Link>
+          <Link href="/rangkuman" className="hover:text-fg">
+            {t(STR.nav_rangkuman)}
+          </Link>
           <Link href="/settings" className="hover:text-fg">
             {t(STR.nav_settings)}
           </Link>
