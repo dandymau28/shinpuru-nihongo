@@ -32,6 +32,12 @@ const TOOLS = [
     name: STR.practice_qw_name,
     desc: STR.practice_qw_desc,
   },
+  {
+    href: "/practice/kana",
+    emoji: "あ",
+    name: STR.practice_kana_name,
+    desc: STR.practice_kana_desc,
+  },
 ];
 
 export default function PracticePage() {

@@ -12,8 +12,31 @@ export const STR = {
   nav_planner: { en: "Planner", id: "Planner" },
   nav_practice: { en: "Practice", id: "Latihan" },
   nav_rangkuman: { en: "Summaries", id: "Rangkuman" },
+  nav_report: { en: "Report", id: "Laporan" },
   nav_settings: { en: "Settings", id: "Pengaturan" },
   nav_about: { en: "About", id: "Tentang" },
+
+  // Personal report (cross-trainer weakness/strength analysis)
+  report_title: { en: "Personal Report", id: "Laporan Personal" },
+  report_intro: {
+    en: "Weakness and strength analysis pulled from every trainer you've practiced with — all from this browser's data, nothing sent anywhere.",
+    id: "Analisis kelemahan dan kekuatan dari semua trainer yang pernah kamu jalani — semuanya dari data di browser ini, tidak dikirim ke mana pun.",
+  },
+  report_empty: {
+    en: "No practice data yet — do a session in any trainer and it'll show up here.",
+    id: "Belum ada data latihan — coba satu sesi di trainer mana pun, nanti muncul di sini.",
+  },
+  report_overview: { en: "Overall accuracy", id: "Akurasi keseluruhan" },
+  report_trainers_used: { en: "trainers used", id: "trainer sudah dicoba" },
+  report_no_data: { en: "No data yet.", id: "Belum ada data." },
+  report_go_practice: { en: "Start practicing", id: "Mulai latihan" },
+  report_open: { en: "Open", id: "Buka" },
+  report_need_more: {
+    en: "Keep going — need at least 3 tries per item to show a breakdown.",
+    id: "Lanjutkan dulu — butuh minimal 3 kali percobaan per item untuk ditampilkan.",
+  },
+  report_strengths: { en: "Strengths", id: "Kekuatan" },
+  report_weaknesses: { en: "Weaknesses", id: "Kelemahan" },
 
   // Rangkuman (materi cheat sheets)
   rangkuman_title: { en: "Grammar Summaries", id: "Rangkuman Materi" },
@@ -56,6 +79,20 @@ export const STR = {
   practice_qw_desc: {
     en: "何・誰・どこ・いつ and more — fill in the right question word from context, with どの/どれ/どちら and いくつ/いくら focus sets.",
     id: "何・誰・どこ・いつ dan lainnya — isi kata tanya yang tepat sesuai konteks, dengan set fokus どの/どれ/どちら dan いくつ/いくら.",
+  },
+  practice_kana_name: { en: "Kana Trainer", id: "Latihan Kana" },
+  practice_kana_desc: {
+    en: "The full hiragana and katakana syllabary, 104 characters each — type the sound or type the character, your choice.",
+    id: "Silabel hiragana dan katakana lengkap, 104 karakter masing-masing — ketik bunyinya atau ketik karakternya, sesuai pilihanmu.",
+  },
+
+  // Kana trainer
+  kana_title: { en: "Kana Trainer", id: "Latihan Kana" },
+  kana_pick_mode: { en: "Which direction?", id: "Arah yang mana?" },
+  kana_pick_scope: { en: "Which characters?", id: "Karakter yang mana?" },
+  kana_no_kana: {
+    en: "No characters match — widen the selection.",
+    id: "Tidak ada karakter yang cocok — perluas pilihan.",
   },
 
   // Particle trainer

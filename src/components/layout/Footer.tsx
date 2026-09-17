@@ -22,6 +22,9 @@ export function Footer() {
           <Link href="/rangkuman" className="hover:text-fg">
             {t(STR.nav_rangkuman)}
           </Link>
+          <Link href="/report" className="hover:text-fg">
+            {t(STR.nav_report)}
+          </Link>
           <Link href="/settings" className="hover:text-fg">
             {t(STR.nav_settings)}
           </Link>

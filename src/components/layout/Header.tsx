@@ -52,6 +52,7 @@ export function Header() {
           <NavLink href="/planner" label={t(STR.nav_planner)} />
           <NavLink href="/practice" label={t(STR.nav_practice)} />
           <NavLink href="/rangkuman" label={t(STR.nav_rangkuman)} />
+          <NavLink href="/report" label={t(STR.nav_report)} />
         </nav>
 
         <div className="flex shrink-0 items-center gap-2" ref={menuRef}>
