@@ -38,6 +38,12 @@ const TOOLS = [
     name: STR.practice_kana_name,
     desc: STR.practice_kana_desc,
   },
+  {
+    href: "/practice/flashcards",
+    emoji: "🎴",
+    name: STR.practice_flashcards_name,
+    desc: STR.practice_flashcards_desc,
+  },
 ];
 
 export default function PracticePage() {

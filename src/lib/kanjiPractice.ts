@@ -1,16 +1,19 @@
 "use client";
 
 import type { Bi } from "./i18n";
-import { KANJI_WORDS, type KanjiEntry } from "@/data/kanji-drills";
+import { KANJI_LEVELS, KANJI_WORDS, type KanjiEntry, type KanjiLevel } from "@/data/kanji-drills";
 
 export type SessionMode = "endless" | "set10" | "set20" | "set40";
 export type KanjiMode = "reading" | "meaning" | "spelling";
 
 export interface KanjiSettings {
-  levels: ("N5" | "N4")[];
+  levels: KanjiLevel[];
   mode: KanjiMode;
   session: SessionMode;
 }
+
+export { KANJI_LEVELS };
+export type { KanjiLevel };
 
 export const DEFAULT_SETTINGS: KanjiSettings = {
   levels: ["N5"],

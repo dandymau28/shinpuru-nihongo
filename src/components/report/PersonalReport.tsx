@@ -9,6 +9,7 @@ import { STR } from "@/lib/strings";
 import { Card } from "@/components/ui/Card";
 import { LocalizedText } from "@/components/layout/LocalizedText";
 import { ReportSection, type StatsLike } from "./ReportSection";
+import { KanjiGaps } from "./KanjiGaps";
 
 export function PersonalReport() {
   const { t } = useSettings();
@@ -72,6 +73,7 @@ export function PersonalReport() {
         href="/practice/kanji"
         stats={kanji}
       />
+      <KanjiGaps />
       <ReportSection
         title={STR.practice_qw_name}
         emoji="❓"

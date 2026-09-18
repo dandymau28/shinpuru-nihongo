@@ -4,8 +4,10 @@ import { useSettings } from "@/context/SettingsContext";
 import { STR } from "@/lib/strings";
 import { cn } from "@/lib/cn";
 import {
+  KANJI_LEVELS,
   MODE_HINT,
   MODE_LABEL,
+  type KanjiLevel,
   type KanjiMode,
   type KanjiSettings,
   type SessionMode,
@@ -27,6 +29,14 @@ export function KanjiTrainerSetup({
 }) {
   const { t } = useSettings();
   const set = (patch: Partial<KanjiSettings>) => onChange({ ...settings, ...patch });
+
+  const toggleLevel = (lvl: KanjiLevel) => {
+    const has = settings.levels.includes(lvl);
+    if (has && settings.levels.length === 1) return; // keep at least one level on
+    set({
+      levels: has ? settings.levels.filter((l) => l !== lvl) : [...settings.levels, lvl],
+    });
+  };
 
   return (
     <div className="space-y-4">
@@ -58,17 +68,26 @@ export function KanjiTrainerSetup({
       <Card className="grid gap-3 sm:grid-cols-2">
         <div>
           <p className="mb-1.5 text-xs font-semibold text-muted">{t(STR.kj_level)}</p>
-          <Segmented
-            value={settings.levels.slice().sort().join("+")}
-            onChange={(v) =>
-              set({ levels: v === "N4+N5" ? ["N5", "N4"] : (v.split("+") as ("N5" | "N4")[]) })
-            }
-            options={[
-              { value: "N5", label: "N5" },
-              { value: "N4", label: "N4" },
-              { value: "N4+N5", label: "N5 + N4" },
-            ]}
-          />
+          <div className="flex flex-wrap gap-1.5">
+            {KANJI_LEVELS.map((lvl) => {
+              const on = settings.levels.includes(lvl);
+              return (
+                <button
+                  key={lvl}
+                  onClick={() => toggleLevel(lvl)}
+                  aria-pressed={on}
+                  className={cn(
+                    "min-w-11 rounded-lg border px-2.5 py-1.5 text-sm font-bold transition-colors",
+                    on
+                      ? "border-primary bg-primary-soft text-primary"
+                      : "border-border text-muted hover:bg-surface-2",
+                  )}
+                >
+                  {lvl}
+                </button>
+              );
+            })}
+          </div>
         </div>
         <div>
           <p className="mb-1.5 text-xs font-semibold text-muted">{t(STR.conj_session_mode)}</p>

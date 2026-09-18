@@ -72,8 +72,8 @@ export const STR = {
   },
   practice_kanji_name: { en: "Kanji Trainer", id: "Latihan Kanji" },
   practice_kanji_desc: {
-    en: "~150 N5–N4 kanji words — drill reading, meaning, or kana → kanji, four options per question.",
-    id: "~150 kata kanji N5–N4 — latih bacaan, arti, atau kana → kanji, empat pilihan per soal.",
+    en: "~370 kanji words from N5 to N2 — drill reading, meaning, or kana → kanji, four options per question.",
+    id: "~370 kata kanji dari N5 sampai N2 — latih bacaan, arti, atau kana → kanji, empat pilihan per soal.",
   },
   practice_qw_name: { en: "Question Word Trainer", id: "Latihan Kata Tanya" },
   practice_qw_desc: {
@@ -85,6 +85,42 @@ export const STR = {
     en: "The full hiragana and katakana syllabary, 104 characters each — type the sound or type the character, your choice.",
     id: "Silabel hiragana dan katakana lengkap, 104 karakter masing-masing — ketik bunyinya atau ketik karakternya, sesuai pilihanmu.",
   },
+  practice_flashcards_name: { en: "Kanji Flashcards", id: "Kartu Kanji" },
+  practice_flashcards_desc: {
+    en: "Browse all 180 N5–N4 kanji words at your own pace — flip to reveal the reading and meaning, tracked as you go.",
+    id: "Jelajahi 180 kata kanji N5–N4 dengan santai — balik kartunya untuk lihat bacaan dan arti, progresnya otomatis tercatat.",
+  },
+
+  // Kanji flashcards
+  fc_title: { en: "Kanji Flashcards", id: "Kartu Kanji" },
+  fc_read: { en: "reviewed", id: "sudah dilihat" },
+  fc_tap_hint: { en: "Tap the card to flip", id: "Ketuk kartu untuk membalik" },
+  fc_prev: { en: "Prev", id: "Sebelumnya" },
+  fc_next: { en: "Next", id: "Lanjut" },
+  fc_shuffle: { en: "Shuffle", id: "Acak" },
+  fc_reset_progress: { en: "Reset progress", id: "Atur ulang progres" },
+  fc_view_all: { en: "All", id: "Semua" },
+  fc_view_unread: { en: "Unreviewed", id: "Belum dilihat" },
+  fc_view_read: { en: "Reviewed", id: "Sudah dilihat" },
+  fc_empty: {
+    en: "No cards match this filter.",
+    id: "Tidak ada kartu yang cocok dengan filter ini.",
+  },
+
+  // Personal report — kanji gaps
+  report_kanji_gaps_title: { en: "Kanji Gaps", id: "Kanji yang Masih Kurang" },
+  report_kanji_gaps_intro: {
+    en: "Kanji you haven't flipped in the flashcards yet, or keep getting wrong in the trainer.",
+    id: "Kanji yang belum pernah dibalik di kartu, atau yang masih sering salah di trainer.",
+  },
+  report_kanji_reviewed: { en: "reviewed via flashcards", id: "sudah dilihat lewat kartu" },
+  report_gap_unreviewed: { en: "not reviewed", id: "belum dilihat" },
+  report_gap_weak: { en: "weak in trainer", id: "lemah di trainer" },
+  report_kanji_gaps_empty: {
+    en: "Nothing flagged — you've reviewed and scored well on everything so far.",
+    id: "Tidak ada yang perlu dikhawatirkan — semuanya sudah dilihat dan nilainya bagus.",
+  },
+  report_review_flashcards: { en: "Review with flashcards", id: "Tinjau dengan kartu" },
 
   // Kana trainer
   kana_title: { en: "Kana Trainer", id: "Latihan Kana" },
